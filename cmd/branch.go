@@ -16,6 +16,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -47,13 +48,18 @@ func githubBranchRun(cmd *cobra.Command, args []string) {
 	owner := viper.GetString("owner")
 	repo := viper.GetString("repo")
 	name := viper.GetString("name")
-	authToken := viper.GetString("auth-token")
+
+	if owner == "" || repo == "" || name == "" {
+		fmt.Println("--name --owner --repo required!")
+		os.Exit(1)
+	}
 
 	getDeploymentEnv := viper.GetBool("get-deployment-env")
 
 	if getDeploymentEnv {
 		branch.GetDeploymentEnv()
 	} else {
-		fmt.Printf("branch called %s/%s/%s %s\n", owner, repo, name, authToken)
+		cmd.Help()
+		os.Exit(0)
 	}
 }
