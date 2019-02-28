@@ -23,6 +23,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+var Version string
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
@@ -30,6 +31,9 @@ var rootCmd = &cobra.Command{
 	Use:   "jenkins-tools",
 	Short: "Jenkins Tools",
 	Long:  `Executable helpers for Jenkins jobs.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -53,10 +57,20 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().BoolP("version", "v", false, "Version")
+
+	viper.BindPFlag("version", rootCmd.PersistentFlags().Lookup("version"))
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	v := viper.GetBool("version")
+
+	if v {
+		fmt.Println("Version:", Version)
+		os.Exit(0)
+	}
+
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
