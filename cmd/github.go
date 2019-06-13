@@ -24,6 +24,12 @@ var githubCmd = &cobra.Command{
 	Use:   "github",
 	Short: "Github integrations",
 	Long:  `Various things to help integrate Jenkins and Github`,
+
+	Example: `
+export GITHUB_AUTH_TOKEN=...
+export GITHUB_OWNER=...
+export GITHUB_REPO=...
+	`,
 }
 
 func init() {

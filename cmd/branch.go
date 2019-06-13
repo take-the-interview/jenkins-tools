@@ -29,6 +29,12 @@ var branchCmd = &cobra.Command{
 	Use:   "branch",
 	Short: "Branch related",
 
+	Example: `
+export BRANCH_NAME=...
+
+jenkins-tools github branch --name "i20" --create-branch-from "staging"
+`,
+
 	Run: githubBranchRun,
 }
 
