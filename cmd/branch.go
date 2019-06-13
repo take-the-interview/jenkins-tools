@@ -1,4 +1,4 @@
-// Copyright © 2019 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2019 Alen Komic <akomic@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,11 +37,50 @@ func init() {
 
 	branchCmd.Flags().StringP("name", "", "", "Branch name BRANCH_NAME")
 	branchCmd.Flags().BoolP("get-deployment-env", "", false, "Get deployment environment name")
+	branchCmd.Flags().StringP("create-branch-from", "", "", "Create new branch from")
 
 	viper.BindPFlag("name", branchCmd.Flags().Lookup("name"))
 	viper.BindPFlag("get-deployment-env", branchCmd.Flags().Lookup("get-deployment-env"))
+	viper.BindPFlag("create-branch-from", branchCmd.Flags().Lookup("create-branch-from"))
 
 	viper.BindEnv("name", "BRANCH_NAME")
+}
+
+func branchIsAllowed(branchName string) bool {
+	allowedBranches := []string{
+		"i1",
+		"i2",
+		"i3",
+		"i4",
+		"i5",
+		"i6",
+		"i7",
+		"i8",
+		"i9",
+		"i10",
+		"i11",
+		"i12",
+		"i13",
+		"i14",
+		"i15",
+		"i16",
+		"i17",
+		"i18",
+		"i19",
+		"i20",
+		"is1",
+		"is2",
+		"is3",
+		"is4",
+		"is5",
+	}
+
+	for _, b := range allowedBranches {
+		if b == branchName {
+			return true
+		}
+	}
+	return false
 }
 
 func githubBranchRun(cmd *cobra.Command, args []string) {
@@ -55,9 +94,16 @@ func githubBranchRun(cmd *cobra.Command, args []string) {
 	}
 
 	getDeploymentEnv := viper.GetBool("get-deployment-env")
+	createBranchFrom := viper.GetString("create-branch-from")
 
 	if getDeploymentEnv {
 		branch.GetDeploymentEnv()
+	} else if createBranchFrom != "" {
+		if !branchIsAllowed(name) {
+			fmt.Printf("Branch %s is not allowed.\n", name)
+		} else {
+			branch.CreateBranch()
+		}
 	} else {
 		cmd.Help()
 		os.Exit(0)
