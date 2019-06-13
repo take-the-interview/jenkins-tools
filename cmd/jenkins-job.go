@@ -58,20 +58,4 @@ func jenkinsJobRun(cmd *cobra.Command, args []string) {
 		cmd.Help()
 		os.Exit(0)
 	}
-
-	// getDeploymentEnv := viper.GetBool("get-deployment-env")
-	// createBranchFrom := viper.GetString("create-branch-from")
-
-	// if getDeploymentEnv {
-	// 	branch.GetDeploymentEnv()
-	// } else if createBranchFrom != "" {
-	// 	if !branchIsAllowed(name) {
-	// 		fmt.Printf("Branch %s is not allowed.\n", name)
-	// 	} else {
-	// 		branch.CreateBranch()
-	// 	}
-	// } else {
-	// 	cmd.Help()
-	// 	os.Exit(0)
-	// }
 }

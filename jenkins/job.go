@@ -8,14 +8,13 @@ import (
 
 	"github.com/bndr/gojenkins"
 	"github.com/spf13/viper"
-	// "reflect"
 	"strings"
 	"time"
 )
 
 var (
-	defaultSleepTime  = 10
-	defaultRetryCount = 10
+	defaultSleepTime  = 20
+	defaultRetryCount = 60
 )
 
 func tailBuildBySHA(name, SHA string) (err error) {
